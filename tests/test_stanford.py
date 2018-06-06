@@ -17,3 +17,11 @@ with description('StanfordCoreNLP') as self:
         document = self.parser.annotate('The quick brown fox jumps over the lazy dog')
         expect(document).to(be_a(CoreDocument))
 
+    with it('loads the necessary prerequisites for sentence splitting'):
+        parser = StanfordCoreNLP(annotators='ssplit')
+        expect(parser.annotators).to(equal(['tokenize', 'ssplit']))
+
+    with it('loads the necessary prerequisites for entity mentions'):
+        parser = StanfordCoreNLP(annotators='entitymentions')
+        expect(parser.annotators).to(equal(['tokenize', 'ssplit', 'pos', 'lemma', 'ner', 'entitymentions']))
+

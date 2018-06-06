@@ -1,3 +1,4 @@
+from nlpype.annotators import SSPLIT, ENTITY_MENTIONS
 from nlpype.objects import CoreObject, cache
 from nlpype.objects.core_sentence import CoreSentence
 from nlpype.objects.core_mention import CoreMention
@@ -31,7 +32,7 @@ class CoreDocument(CoreObject):
 
         :return: A list of sentences contained in the document
         """
-        if 'ssplit' not in self._pipeline.annotators:
+        if SSPLIT not in self._pipeline.annotators:
             raise AttributeError('This document was not parsed with sentence tokenization.')
         return [CoreSentence(sent, self._pipeline) for sent in self._base.sentences()]
 
@@ -53,7 +54,7 @@ class CoreDocument(CoreObject):
 
         :return: A list of entities mentioned in the document
         """
-        if 'entitymentions' not in self._pipeline.annotators:
+        if ENTITY_MENTIONS not in self._pipeline.annotators:
             raise AttributeError('This document was not parsed with entity mention recognition.')
         mentions = sorted(
             self._base.entityMentions(), key=lambda x: x.charOffsets().first()
