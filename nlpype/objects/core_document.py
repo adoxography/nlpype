@@ -1,4 +1,5 @@
 from nlpype.objects import CoreObject, cache
+from nlpype.objects.core_sentence import CoreSentence
 
 
 class CoreDocument(CoreObject):
@@ -29,7 +30,9 @@ class CoreDocument(CoreObject):
 
         :return: A list of sentences contained in the document
         """
-        return list(self._base.sentences())
+        if 'ssplit' not in self._pipeline.annotators:
+            raise AttributeError('This document was not parsed with sentence tokenization.')
+        return [CoreSentence(sent, self._pipeline) for sent in self._base.sentences()]
 
     @cache
     def coref_chains(self):

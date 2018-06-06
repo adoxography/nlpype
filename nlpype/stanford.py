@@ -13,6 +13,7 @@ class StanfordCoreNLP:
         :type props: dict of str, str
         """
         jvm.boot()
+        self._props = kwargs
 
         props = util.Properties()
         for k, v in kwargs.items():
@@ -31,5 +32,14 @@ class StanfordCoreNLP:
         """
         document = corenlp.pipeline.CoreDocument(text.replace('\n', ' '))
         self._pipeline.annotate(document)
-        return CoreDocument(document)
+        return CoreDocument(document, self)
+
+    @property
+    def annotators(self):
+        """
+        Retrieves the annotators this pipeline was initialized with
+        """
+        if 'annotators' in self._props:
+            return self._props['annotators']
+        return []
 

@@ -8,13 +8,15 @@ class CoreObject(metaclass=ABCMeta):
     underlying Java object, and translates Python __str__ and __repr__ calls
     into Java toString() calls.
     """
-    def __init__(self, base):
+    def __init__(self, base, pipeline):
         """
         Initializes the wrapper
 
         :param base: The underlying Java object
+        :param pipeline: The pipeline that was originally used to parse this object
         """
         self._base = base
+        self._pipeline = pipeline
 
     def __getattr__(self, attr):
         """
