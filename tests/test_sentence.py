@@ -15,3 +15,6 @@ with describe('CoreSentence') as self:
         tokens = self.sentences[0].tokens()
         expect(all(isinstance(token, CoreToken) for token in tokens)).to(be_true)
 
+    with it('can access tokens by index'):
+        expect(str(self.sentences[0][3])).to(equal('sentence'))
+
