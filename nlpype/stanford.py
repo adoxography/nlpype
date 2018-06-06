@@ -21,6 +21,14 @@ class StanfordCoreNLP:
         self._pipeline = corenlp.pipeline.StanfordCoreNLP(props)
 
     def annotate(self, text):
+        """
+        Annotates a document with the underlying pipeline
+
+        :param text: The document to annotate
+        :type text: str
+        :return: An annotated CoreNLP document
+        :rtype: CoreDocument
+        """
         document = corenlp.pipeline.CoreDocument(text.replace('\n', ' '))
         self._pipeline.annotate(document)
         return CoreDocument(document)

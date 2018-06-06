@@ -21,6 +21,14 @@ def boot(corenlp_path = '/opt/stanford-corenlp/latest'):
 
 
 def make_classpath(path):
+    """
+    Collects all of the JARs in a path and prepares them for loading into the
+    JVM
+
+    :param path: The path to a folder containing JAR files
+    :type path: str
+    :return: A string that can be used as a classpath
+    """
     jars = glob(os.path.join(path, '*.jar'))
     return SEP.join(jars)
 
