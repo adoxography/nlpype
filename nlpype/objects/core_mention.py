@@ -1,12 +1,10 @@
 from nlpype.objects import CoreObject, cache
-from nlpype.objects.core_token import CoreToken
+from nlpype.objects.has_tokens import HasTokens
 
 
-class CoreMention(CoreObject):
+class CoreMention(CoreObject, HasTokens):
     """
     Wraps an edu.stanford.nlp.pipeline.CoreEntityMention
     """
-    @cache
-    def tokens(self):
-        return [CoreToken(token, self._pipeline) for token in self._base.tokens()]
+    pass
 
