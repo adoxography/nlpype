@@ -1,5 +1,6 @@
 from nlpype.objects import CoreObject, cache
 from nlpype.objects.core_sentence import CoreSentence
+from nlpype.objects.core_mention import CoreMention
 
 
 class CoreDocument(CoreObject):
@@ -52,10 +53,12 @@ class CoreDocument(CoreObject):
 
         :return: A list of entities mentioned in the document
         """
+        if 'entitymentions' not in self._pipeline.annotators:
+            raise AttributeError('This document was not parsed with entity mention recognition.')
         mentions = sorted(
             self._base.entityMentions(), key=lambda x: x.charOffsets().first()
         )
-        return mentions
+        return [CoreMention(mention, self._pipeline) for mention in mentions]
 
     @cache
     def quotes(self):
