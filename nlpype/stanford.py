@@ -1,5 +1,8 @@
+import os
+
 from nlpype.java import jvm, corenlp, util
 from nlpype.objects import CoreDocument
+from nlpype.util.io import stdout_redirected, merged_stderr_stdout
 
 
 class StanfordCoreNLP:
@@ -19,7 +22,8 @@ class StanfordCoreNLP:
         for k, v in kwargs.items():
             props.setProperty(k, v)
         
-        self._pipeline = corenlp.pipeline.StanfordCoreNLP(props)
+        with stdout_redirected(to=os.devnull), merged_stderr_stdout():
+            self._pipeline = corenlp.pipeline.StanfordCoreNLP(props)
 
     def annotate(self, text):
         """
