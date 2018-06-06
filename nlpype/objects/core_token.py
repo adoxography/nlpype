@@ -14,5 +14,21 @@ class CoreToken(CoreObject):
     def _set_text(self, value):
         return self._base.setOriginalText(value)
 
+    def _get_after(self):
+        return self._base.after()
+
+    def _set_after(self, value):
+        self._base.setAfter(value)
+
     text = property(_get_text, _set_text)
+    after = property(_get_after, _set_after)
+
+    def space(self):
+        self.after = ' '
+
+    def no_space(self):
+        self.after = ''
+
+    def full(self):
+        return self.text + self.after
 
