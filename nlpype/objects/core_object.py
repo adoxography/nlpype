@@ -17,3 +17,14 @@ class CoreObject(metaclass=ABCMeta):
             return obj._base
         return obj
 
+
+def cache(func):
+    def wrapper(self, *args, **kwargs):
+        key = '_' + func.__name__
+        if hasattr(self, key):
+            return getattr(self, key)
+        value = func(self, *args, **kwargs)
+        setattr(self, key, value)
+        return value
+    return wrapper
+
