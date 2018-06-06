@@ -31,6 +31,11 @@ class HasTokens(metaclass=ABCMeta):
         if isinstance(index, slice):
             start = index.start
             end = index.stop
+
+            if start is None:
+                start = 0
+            if end is None:
+                end = len(self)
         else:
             start = end = index
 
@@ -49,4 +54,7 @@ class HasTokens(metaclass=ABCMeta):
         :rtype: list of CoreToken
         """
         return [CoreToken(token, self._pipeline) for token in self._base.tokens()]
+
+    def __len__(self):
+        return len(self.tokens())
 

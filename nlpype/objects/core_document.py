@@ -1,4 +1,4 @@
-from nlpype.annotators import SSPLIT, ENTITY_MENTIONS
+from nlpype.annotators import SSPLIT, ENTITY_MENTIONS, COREF
 from nlpype.objects import CoreObject, cache
 from nlpype.objects.core_sentence import CoreSentence
 from nlpype.objects.core_mention import CoreMention
@@ -70,4 +70,13 @@ class CoreDocument(CoreObject):
         :return: A list of quotes contained in the document
         """
         return list(self._base.quotes())
+
+    def resolve_pronouns(self):
+        """
+        Resolves all of the pronouns to their canonical mentions
+        """
+        if ENTITY_MENTIONS not in self._pipeline.annotators or COREF not in self._pipeline.annotators:
+            raise AttributeError('This document was not parsed with entity mention recognition and coreference resolution.')
+        for mention in self.entity_mentions():
+            mention.text = str(mention.canonical())
 

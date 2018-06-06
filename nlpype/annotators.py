@@ -20,7 +20,9 @@ POS      = Annotator('pos', [])
 LEMMA    = Annotator('lemma', [])
 NER      = Annotator('ner', [])
 ENTITY_MENTIONS = Annotator('entitymentions', [TOKENIZE, SSPLIT, POS, LEMMA, NER])
-ANNOTATORS = [TOKENIZE, SSPLIT, POS, LEMMA, NER, ENTITY_MENTIONS]
+DEP_PARSE = Annotator('depparse', [])
+COREF    = Annotator('coref', [TOKENIZE, SSPLIT, POS, LEMMA, NER, DEP_PARSE])
+ANNOTATORS = [TOKENIZE, SSPLIT, POS, LEMMA, NER, ENTITY_MENTIONS, DEP_PARSE, COREF]
 
 
 def get_annotator(name):

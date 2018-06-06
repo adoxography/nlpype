@@ -15,7 +15,7 @@ def boot(corenlp_path = '/opt/stanford-corenlp/latest'):
     """
     if not isJVMStarted():
         startJVM(
-            getDefaultJVMPath(), '-ea',
+            getDefaultJVMPath(), '-ea', '-Xmx4G',
             '-Djava.class.path=' + make_classpath(corenlp_path)
         )
 
