@@ -1,11 +1,19 @@
 from mamba import *
 from expects import *
-from nlpype.stanford import StanfordCoreNLP
 import jpype
 
+from nlpype.stanford import StanfordCoreNLP
+from nlpype.objects import CoreDocument
 
 with description('StanfordCoreNLP') as self:
+    
+    with before.all:
+        self.parser = StanfordCoreNLP(annotators='tokenize')
+
     with it('loads an instance of CoreNLP'):
-        parser = StanfordCoreNLP(annotators='tokenize')
-        expect(str(type(parser._pipeline))).to(equal("<class 'jpype._jclass.edu.stanford.nlp.pipeline.StanfordCoreNLP'>"))
+        expect(str(type(self.parser._pipeline))).to(equal("<class 'jpype._jclass.edu.stanford.nlp.pipeline.StanfordCoreNLP'>"))
+
+    with it('annotates a string'):
+        document = self.parser.annotate('The quick brown fox jumps over the lazy dog')
+        expect(document).to(be_a(CoreDocument))
 

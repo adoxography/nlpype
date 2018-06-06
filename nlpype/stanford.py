@@ -1,4 +1,5 @@
 from nlpype.java import jvm, corenlp, util
+from nlpype.objects import CoreDocument
 
 
 class StanfordCoreNLP:
@@ -18,4 +19,9 @@ class StanfordCoreNLP:
             props.setProperty(k, v)
         
         self._pipeline = corenlp.pipeline.StanfordCoreNLP(props)
+
+    def annotate(self, text):
+        document = corenlp.pipeline.CoreDocument(text.replace('\n', ' '))
+        self._pipeline.annotate(document)
+        return CoreDocument(document)
 
