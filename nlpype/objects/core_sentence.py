@@ -6,5 +6,6 @@ class CoreSentence(CoreObject, HasTokens):
     """
     Wraps an edu.stanford.nlp.pipeline.CoreSentence
     """
-    pass
+    def regenerate(self):
+        return ''.join(token.full() for token in self.tokens())
 

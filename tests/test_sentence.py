@@ -31,3 +31,9 @@ with describe('CoreSentence') as self:
         phrase = ''.join(token.full() for token in sentence[3:5])
         expect(phrase).to(equal('short '))
 
+    with it('regenerates a sentence, applying all changes to tokens'):
+        document = self.parser.annotate('This is a very long sentence.')
+        sentence = document[0]
+        sentence[3:5] = 'short'
+        expect(sentence.regenerate()).to(equal('This is a short sentence.'))
+
