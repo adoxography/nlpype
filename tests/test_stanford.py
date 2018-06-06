@@ -2,7 +2,7 @@ from mamba import *
 from expects import *
 import jpype
 
-from nlpype.stanford import StanfordCoreNLP
+from nlpype import StanfordCoreNLP
 from nlpype.objects import CoreDocument
 
 with description('StanfordCoreNLP') as self:
