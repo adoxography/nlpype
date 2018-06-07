@@ -1,9 +1,10 @@
 import os
 import re
+import sys
 
-from nlpype.java import jvm, corenlp, util
+from nlpype.javalib import jvm, corenlp, util
 from nlpype.objects import CoreDocument
-from nlpype.util.io import stdout_redirected, merged_stderr_stdout
+from nlpype.util.loading import loading
 from nlpype.annotators import get_annotator, sort_annotators
 
 
@@ -24,7 +25,7 @@ class StanfordCoreNLP:
         for k, v in self._props.items():
             props.setProperty(k, v)
         
-        with stdout_redirected(to=os.devnull), merged_stderr_stdout():
+        with loading('Loading CoreNLP...'):
             self._pipeline = corenlp.pipeline.StanfordCoreNLP(props)
             
     def _set_props(self, props):

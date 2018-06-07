@@ -1,12 +1,15 @@
 import os
 from glob import glob
 
-from jpype import startJVM, getDefaultJVMPath, isJVMStarted
+from jpype import startJVM, getDefaultJVMPath, isJVMStarted, java
 
 
 """ The separator to use in the classpath """
 # TODO: Make this Windows compatible
 SEP = ':'
+
+stdout = None
+stderr = None
 
 
 def boot(corenlp_path = '/opt/stanford-corenlp/latest'):
@@ -18,6 +21,21 @@ def boot(corenlp_path = '/opt/stanford-corenlp/latest'):
             getDefaultJVMPath(), '-ea', '-Xmx4G',
             '-Djava.class.path=' + make_classpath(corenlp_path)
         )
+        capture_streams()
+
+
+def capture_streams():
+    """
+    Redirects Java's stdout and stderr to streams
+    """
+    global stdout, stderr
+    ByteArrayOutputStream = java.io.ByteArrayOutputStream
+    PrintStream = java.io.PrintStream
+
+    stdout = ByteArrayOutputStream() 
+    stderr = ByteArrayOutputStream() 
+    java.lang.System.setOut(PrintStream(stdout))
+    java.lang.System.setErr(PrintStream(stderr))
 
 
 def make_classpath(path):
