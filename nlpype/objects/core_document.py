@@ -78,5 +78,10 @@ class CoreDocument(CoreObject):
         if ENTITY_MENTIONS not in self._pipeline.annotators or COREF not in self._pipeline.annotators:
             raise AttributeError('This document was not parsed with entity mention recognition and coreference resolution.')
         for mention in self.entity_mentions():
-            mention.text = str(mention.canonical())
+            text = str(mention.canonical())
+
+            if len(mention) == 1 and mention[0].tag == 'PRP$':
+                text += "'s"
+
+            mention.text = text
 

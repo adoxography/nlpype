@@ -20,8 +20,15 @@ class CoreToken(CoreObject):
     def _set_after(self, value):
         self._base.setAfter(value)
 
+    def _get_tag(self):
+        return self._base.tag()
+
+    def _set_tag(self, tag):
+        self._base.setTag(tag)
+
     text = property(_get_text, _set_text)
     after = property(_get_after, _set_after)
+    tag = property(_get_tag, _set_tag)
 
     def space(self):
         self.after = ' '
