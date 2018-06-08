@@ -39,7 +39,7 @@ class Loader:
         """ Terminates the spinner """
         self._done = True
         self.print('\rDone!')
-        sefl.print('\n')
+        self.print('\n')
 
     def _animate(self):
         """ Displays a message along with a spinner """
