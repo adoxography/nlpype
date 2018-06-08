@@ -85,3 +85,6 @@ class CoreDocument(CoreObject):
 
             mention.text = text
 
+    def regenerate(self, sep=''):
+        return sep.join([sent.regenerate() for sent in self.sentences()])
+
