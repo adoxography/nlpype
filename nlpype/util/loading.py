@@ -17,10 +17,10 @@ class Signal:
 
 
 def animate(message, signal):
-    for c in itertools.cycle(['|', '/', '-', '\\']):
+    for c in itertools.cycle('⠁⠂⠄⡀⢀⠠⠐⠈'):
         if signal:
             break
-        sys.stderr.write('\r' + message + ' ' + c)
+        sys.stderr.write('\r' + message + ' ' + c + ' ')
         sys.stderr.flush()
         time.sleep(0.1)
     sys.stderr.write('\rDone!' + ' ' * len(message) + '\n')
