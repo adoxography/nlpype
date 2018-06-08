@@ -4,7 +4,7 @@ import sys
 
 from nlpype.javalib import jvm, corenlp, util
 from nlpype.objects import CoreDocument
-from nlpype.util.loading import loading
+from nlpype.util.loading import Loader, StreamReader
 from nlpype.annotators import get_annotator, sort_annotators
 
 
@@ -24,8 +24,9 @@ class StanfordCoreNLP:
         props = util.Properties()
         for k, v in self._props.items():
             props.setProperty(k, v)
-        
-        with loading('Loading CoreNLP...'):
+
+        reader = StreamReader(jvm.stderr, pattern=r'Adding annotator.*')
+        with Loader('Loading Stanford CoreNLP...', reader):
             self._pipeline = corenlp.pipeline.StanfordCoreNLP(props)
             
     def _set_props(self, props):
