@@ -58,6 +58,11 @@ class StanfordCoreNLP:
         self._pipeline.annotate(document)
         return CoreDocument(document, self)
 
+    def resolve_pronouns(self, text):
+        document = self.annotate(text)
+        document.resolve_pronouns()
+        return document.regenerate()
+
     @property
     def annotators(self):
         """
