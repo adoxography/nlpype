@@ -1,4 +1,5 @@
 from nlpype.objects import CoreObject, cache
+from nlpype.annotators import NER
 
 
 class CoreToken(CoreObject):
@@ -26,9 +27,18 @@ class CoreToken(CoreObject):
     def _set_tag(self, tag):
         self._base.setTag(tag)
 
+    def _get_ner(self):
+        if NER not in self._pipeline.annotators:
+            raise AttributeError('This token was not parsed with named entity recognition.')
+        return self._base.ner()
+
+    def _set_ner(self, value):
+        self._base.setNER(value)
+
     text = property(_get_text, _set_text)
     after = property(_get_after, _set_after)
     tag = property(_get_tag, _set_tag)
+    ner = property(_get_ner, _set_ner)
 
     def space(self):
         self.after = ' '

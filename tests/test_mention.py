@@ -34,3 +34,17 @@ with describe('CoreMention') as self:
         mention.text = 'Bob Barker'
         expect(mention.text).to(equal('Bob Barker'))
 
+    with it('retrieves its ner tag'):
+        mention = self.mentions[0]
+        expect(mention.ner).to(equal('PERSON'))
+
+    with it('sets its tag'):
+        mention = self.mentions[0]
+        mention.ner = 'PLACE'
+        expect(mention.ner).to(equal('PLACE'))
+
+    with it('sets the tags of its children'):
+        mention = self.mentions[0]
+        mention.ner = 'PLACE'
+        expect(all(token.ner == 'PLACE' for token in mention)).to(be_true)
+

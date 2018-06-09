@@ -6,9 +6,9 @@ from nlpype import StanfordCoreNLP
 
 with describe('CoreToken') as self:
     with before.all:
-        parser = StanfordCoreNLP(annotators='ssplit')
-        document = parser.annotate('This is a sentence.')
-        self.tokens = document[0].tokens()
+        parser = StanfordCoreNLP(annotators='entitymentions')
+        self.document = parser.annotate('This is a sentence. John likes cats.')
+        self.tokens = self.document[0].tokens()
 
     with it('yields its underlying string with str'):
         token = self.tokens[1]
@@ -45,4 +45,19 @@ with describe('CoreToken') as self:
     with it('returns the text and the string afterwords') :
         token = self.tokens[2]
         expect(token.full()).to(equal('a '))
+
+    with it('gets its ner tag'):
+        token = self.document[1][0]
+        expect(token.ner).to(equal('PERSON'))
+
+    with it('sets its ner tag'):
+        token = self.document[1][0]
+        token.ner = 'PLACE'
+        expect(token.ner).to(equal('PLACE'))
+
+    with it('raises an error if NER is accessed without the ner annotator'):
+        parser = StanfordCoreNLP(annotators='ssplit')
+        document = parser.annotate('This is a sentence. John likes cats.')
+        token = document[1][0]
+        expect(token._get_ner).to(raise_error(AttributeError))
 
