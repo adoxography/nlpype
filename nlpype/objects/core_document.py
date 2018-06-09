@@ -2,6 +2,7 @@ from nlpype.annotators import SSPLIT, ENTITY_MENTIONS, COREF
 from nlpype.objects import CoreObject, cache
 from nlpype.objects.core_sentence import CoreSentence
 from nlpype.objects.core_mention import CoreMention
+from nlpype.objects.core_token import CoreToken
 
 
 class CoreDocument(CoreObject):
@@ -35,6 +36,10 @@ class CoreDocument(CoreObject):
         if SSPLIT not in self._pipeline.annotators:
             raise AttributeError('This document was not parsed with sentence tokenization.')
         return [CoreSentence(sent, self._pipeline) for sent in self._base.sentences()]
+
+    @cache
+    def tokens(self):
+        return [CoreToken(token, self._pipeline) for token in self._base.tokens()]
 
     @cache
     def coref_chains(self):

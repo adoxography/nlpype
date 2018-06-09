@@ -16,6 +16,16 @@ class CoreMention(CoreObject, HasTokens):
             raise AttributeError
         return CoreMention(self._base.canonicalEntityMention().get(), self._pipeline)
 
+    def full(self):
+        return ''.join(token.full() for token in self.tokens())
+
+    def tag(self):
+        tag = self.ner
+        builder = ["<{}>".format(tag)] + [token.full() for token in self[:-1]]
+        builder.append(self[-1].text)
+        builder.append("</{}>".format(tag))
+        return ''.join(builder)
+
     def _get_text(self):
         return ''.join([token.full() for token in self]).strip()
 
@@ -32,6 +42,17 @@ class CoreMention(CoreObject, HasTokens):
         for token in self.tokens():
             token.ner = value
 
+    def _get_after(self):
+        return self[-1].after
+
+    def _set_after(self, val):
+        self[-1].after = val
+
     text = property(_get_text, _set_text)
     ner = property(_get_ner, _set_ner)
+
+    @property
+    def index(self):
+        return self[0].index()
+
 
