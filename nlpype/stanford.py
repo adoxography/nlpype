@@ -2,6 +2,7 @@ import os
 import re
 import sys
 
+from nlpype.ner import tag_named_entities
 from nlpype.javalib import jvm, corenlp, util
 from nlpype.objects import CoreDocument
 from nlpype.util.loading import Loader, StreamReader
@@ -62,6 +63,9 @@ class StanfordCoreNLP:
         document = self.annotate(text)
         document.resolve_pronouns()
         return document.regenerate()
+
+    def tag_named_entities(self, text):
+        return tag_named_entities(text, self)
 
     @property
     def annotators(self):
