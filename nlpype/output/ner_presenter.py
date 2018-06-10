@@ -1,4 +1,4 @@
-from nlpype.output.presenter import Presenter
+from nlpype.output import Presenter
 
 
 class NERPresenter(Presenter):
