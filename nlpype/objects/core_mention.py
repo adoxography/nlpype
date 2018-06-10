@@ -26,6 +26,9 @@ class CoreMention(CoreObject, HasTokens):
         builder.append("</{}>".format(tag))
         return ''.join(builder)
 
+    def is_possessive(self):
+        return ['PRP$' in [token.tag for token in self.tokens()]]
+
     def _get_text(self):
         return ''.join([token.full() for token in self]).strip()
 
