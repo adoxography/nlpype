@@ -64,8 +64,8 @@ class StanfordCoreNLP:
         document.resolve_pronouns()
         return document.regenerate()
 
-    def tag_named_entities(self, text):
-        return tag_named_entities(text, self)
+    def tag_named_entities(self, text, **kwargs):
+        return tag_named_entities(text, self, **kwargs)
 
     @property
     def annotators(self):

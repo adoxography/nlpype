@@ -10,8 +10,13 @@ class NERPresenter(Presenter):
         while index < len(tokens):
             if index in mentions:
                 mention = mentions[index]
-                builder.append(mention.xml())
-                builder.append(' ')
+
+                if mention.is_possessive() and not tag_pronouns:
+                    builder.append(mention.full())
+                else:
+                    builder.append(mention.xml())
+                    builder.append(' ')
+
                 index += len(mention)
             else:
                 builder.append(tokens[index].full())
