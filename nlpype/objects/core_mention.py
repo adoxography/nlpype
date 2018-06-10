@@ -19,7 +19,7 @@ class CoreMention(CoreObject, HasTokens):
     def full(self):
         return ''.join(token.full() for token in self.tokens())
 
-    def tag(self):
+    def xml(self):
         tag = self.ner
         builder = ["<{}>".format(tag)] + [token.full() for token in self[:-1]]
         builder.append(self[-1].text)
