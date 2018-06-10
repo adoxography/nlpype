@@ -1,8 +1,8 @@
-from nlpype.output.outputter import Outputter
+from nlpype.output.presenter import Presenter
 
 
-class NEROutputter(Outputter):
-    def print(self, document):
+class NERPresenter(Presenter):
+    def convert(self, document):
         builder = []
         mentions = {mention.index - 1: mention for mention in document.entity_mentions()}
         tokens = document.tokens()
