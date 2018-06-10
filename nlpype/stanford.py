@@ -32,7 +32,10 @@ class StanfordCoreNLP:
             
     def _set_props(self, props):
         if 'annotators' in props:
-            annotators = re.split('[\s,]', props['annotators'])
+            if isinstance(props['annotators'], str):
+                annotators = re.split('[\s,]', props['annotators'])
+            else:
+                annotators = props['annotators']
         else:
             annotators = ['tokenize']
         annotators = [get_annotator(name) for name in annotators]
