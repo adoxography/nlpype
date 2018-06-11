@@ -12,14 +12,14 @@ from nlpype.annotators import get_annotator, sort_annotators
 class StanfordCoreNLP:
     """ Wraps a Java StanfordCoreNLP pipeline """
 
-    def __init__(self, **kwargs):
+    def __init__(self, corenlp_dir=None, **kwargs):
         """
         Initializes a CoreNLP pipeline
 
         :param props: The properties to initialize the pipeline with
         :type props: dict of str, str
         """
-        jvm.boot()
+        jvm.boot(corenlp_dir)
         self._set_props(kwargs)
 
         props = util.Properties()
