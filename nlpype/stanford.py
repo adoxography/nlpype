@@ -12,7 +12,7 @@ from nlpype.annotators import get_annotator, sort_annotators
 class StanfordCoreNLP:
     """ Wraps a Java StanfordCoreNLP pipeline """
 
-    def __init__(self, corenlp_dir=None, **kwargs):
+    def __init__(self, corenlp_dir='/opt/stanford-corenlp/latest', **kwargs):
         """
         Initializes a CoreNLP pipeline
 

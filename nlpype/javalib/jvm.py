@@ -24,15 +24,21 @@ stdout = None
 stderr = None
 
 
-def boot(corenlp_path = '/opt/stanford-corenlp/latest'):
+def boot(corenlp_path = None):
     """
     Starts up the Java Virtual Machine
     """
+    options = [
+        getDefaultJVMPath(),
+        '-ea',
+        '-Xmx4G'
+    ]
+
     if not isJVMStarted():
-        startJVM(
-            getDefaultJVMPath(), '-ea', '-Xmx4G',
-            '-Djava.class.path=' + make_classpath(Path(corenlp_path))
-        )
+        if corenlp_path:
+            options.append('-Djava.class.path={}'.format(make_classpath(Path(corenlp_path))))
+
+        startJVM(*options)
         capture_streams()
         open_buffers()
 
