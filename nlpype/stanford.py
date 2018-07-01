@@ -1,6 +1,4 @@
-import os
 import re
-import sys
 
 from nlpype.ner import tag_named_entities
 from nlpype.javalib import jvm, corenlp, util
@@ -29,7 +27,7 @@ class StanfordCoreNLP:
         reader = StreamReader(jvm.stderr, pattern=r'Adding annotator.*')
         with Loader('Loading Stanford CoreNLP...', reader):
             self._pipeline = corenlp.pipeline.StanfordCoreNLP(props)
-            
+
     def _set_props(self, props):
         if 'annotators' in props:
             if isinstance(props['annotators'], str):
@@ -46,7 +44,9 @@ class StanfordCoreNLP:
                 requirements += annotator.requires
 
         annotators = set(requirements + annotators)
-        props['annotators'] = ','.join([annotator.name for annotator in sort_annotators(annotators)])
+        props['annotators'] = ','.join(
+            [annotator.name for annotator in sort_annotators(annotators)]
+        )
         self._props = props
 
     def annotate(self, text):
@@ -78,4 +78,3 @@ class StanfordCoreNLP:
         if 'annotators' in self._props:
             return re.split('[\s,]', self._props['annotators'])
         return []
-

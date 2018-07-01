@@ -1,4 +1,4 @@
-from nlpype.objects import CoreObject, cache
+from nlpype.objects import CoreObject
 from nlpype.objects.has_tokens import HasTokens
 
 
@@ -8,4 +8,3 @@ class CoreSentence(CoreObject, HasTokens):
     """
     def regenerate(self):
         return ''.join(token.full() for token in self.tokens())
-

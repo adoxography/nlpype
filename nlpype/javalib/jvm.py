@@ -1,5 +1,3 @@
-import os
-from glob import glob
 from pathlib import Path
 
 from jpype import startJVM, getDefaultJVMPath, isJVMStarted, java
@@ -24,7 +22,7 @@ stdout = None
 stderr = None
 
 
-def boot(corenlp_path = None):
+def boot(corenlp_path=None):
     """
     Starts up the Java Virtual Machine
     """
@@ -36,8 +34,9 @@ def boot(corenlp_path = None):
 
     if not isJVMStarted():
         if corenlp_path:
-            options.append('-Djava.class.path={}'.format(make_classpath(Path(corenlp_path))))
-
+            options.append(
+                f'-Djava.class.path={make_classpath(Path(corenlp_path))}'
+            )
         startJVM(*options)
         capture_streams()
         open_buffers()
@@ -96,4 +95,3 @@ def make_classpath(path):
     :return: A string that can be used as a classpath
     """
     return SEP.join([str(p.resolve()) for p in path.glob('*.jar')])
-

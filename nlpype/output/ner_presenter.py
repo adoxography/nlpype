@@ -4,7 +4,10 @@ from nlpype.output import Presenter
 class NERPresenter(Presenter):
     def convert(self, document, tag_pronouns=False):
         builder = []
-        mentions = {mention.index - 1: mention for mention in document.entity_mentions()}
+        mentions = {
+            mention.index - 1: mention
+            for mention in document.entity_mentions()
+        }
         tokens = document.tokens()
         index = 0
         while index < len(tokens):
@@ -22,4 +25,3 @@ class NERPresenter(Presenter):
                 builder.append(tokens[index].full())
                 index += 1
         return ''.join(builder)
-

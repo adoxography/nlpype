@@ -34,12 +34,20 @@ class CoreDocument(CoreObject):
         :return: A list of sentences contained in the document
         """
         if SSPLIT not in self._pipeline.annotators:
-            raise AttributeError('This document was not parsed with sentence tokenization.')
-        return [CoreSentence(sent, self._pipeline) for sent in self._base.sentences()]
+            raise AttributeError(
+                'This document was not parsed with sentence tokenization.'
+            )
+        return [
+            CoreSentence(sent, self._pipeline)
+            for sent in self._base.sentences()
+        ]
 
     @cache
     def tokens(self):
-        return [CoreToken(token, self._pipeline) for token in self._base.tokens()]
+        return [
+            CoreToken(token, self._pipeline)
+            for token in self._base.tokens()
+        ]
 
     @cache
     def coref_chains(self):
@@ -60,7 +68,9 @@ class CoreDocument(CoreObject):
         :return: A list of entities mentioned in the document
         """
         if ENTITY_MENTIONS not in self._pipeline.annotators:
-            raise AttributeError('This document was not parsed with entity mention recognition.')
+            raise AttributeError(
+                'This document was not parsed with entity mention recognition.'
+            )
         mentions = sorted(
             self._base.entityMentions(), key=lambda x: x.charOffsets().first()
         )
@@ -80,8 +90,11 @@ class CoreDocument(CoreObject):
         """
         Resolves all of the pronouns to their canonical mentions
         """
-        if ENTITY_MENTIONS not in self._pipeline.annotators or COREF not in self._pipeline.annotators:
-            raise AttributeError('This document was not parsed with entity mention recognition and coreference resolution.')
+        if ENTITY_MENTIONS not in self._pipeline.annotators \
+                or COREF not in self._pipeline.annotators:
+            raise AttributeError(
+                'This document was not parsed with entity mention recognition and coreference resolution.'
+            )
         for mention in self.entity_mentions():
             text = str(mention.canonical())
 
@@ -92,4 +105,3 @@ class CoreDocument(CoreObject):
 
     def regenerate(self, sep=''):
         return sep.join([sent.regenerate() for sent in self.sentences()])
-

@@ -1,4 +1,3 @@
-import re
 from abc import ABCMeta
 
 
@@ -13,7 +12,8 @@ class CoreObject(metaclass=ABCMeta):
         Initializes the wrapper
 
         :param base: The underlying Java object
-        :param pipeline: The pipeline that was originally used to parse this object
+        :param pipeline: The pipeline that was originally used to parse this
+                         object
         """
         self._base = base
         self._pipeline = pipeline
@@ -38,7 +38,7 @@ class CoreObject(metaclass=ABCMeta):
         """
         Helper method for finding the underlying Java object of an object that
         could be either a wrapper or a Java object
-        
+
         :param obj: The object to unwrap
         :return: The underlying Java object of obj
         """
@@ -65,4 +65,3 @@ def cache(func):
         setattr(self, key, value)
         return value
     return wrapper
-

@@ -1,4 +1,4 @@
-from nlpype.objects import CoreObject, cache
+from nlpype.objects import CoreObject
 from nlpype.annotators import NER
 
 
@@ -29,7 +29,9 @@ class CoreToken(CoreObject):
 
     def _get_ner(self):
         if NER not in self._pipeline.annotators:
-            raise AttributeError('This token was not parsed with named entity recognition.')
+            raise AttributeError(
+                'This token was not parsed with named entity recognition.'
+            )
         return self._base.ner()
 
     def _set_ner(self, value):
@@ -48,4 +50,3 @@ class CoreToken(CoreObject):
 
     def full(self):
         return self.text + self.after
-

@@ -98,7 +98,11 @@ class StreamReader:
 
     def __call__(self):
         """ Retrieves the latest line from the stream matching the pattern """
-        lines = [line.rstrip() for line in self._stream.readlines() if self._accept(line)]
+        lines = [
+            line.rstrip()
+            for line in self._stream.readlines()
+            if self._accept(line)
+        ]
         if lines:
             self._latest = self._format(lines[-1])
         return self._latest
@@ -106,7 +110,7 @@ class StreamReader:
     def _accept(self, line):
         """
         Checks if a line is accepted by the reader
-        
+
         :param line: The line to check
         :type line: str
         :return: True if the line is non-empty and matches the pattern (if
@@ -130,4 +134,3 @@ class StreamReader:
         if self._pattern:
             return self._pattern.search(line)[0]
         return line
-

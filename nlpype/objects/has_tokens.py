@@ -53,8 +53,10 @@ class HasTokens(metaclass=ABCMeta):
 
         :rtype: list of CoreToken
         """
-        return [CoreToken(token, self._pipeline) for token in self._base.tokens()]
+        return [
+            CoreToken(token, self._pipeline)
+            for token in self._base.tokens()
+        ]
 
     def __len__(self):
         return len(self.tokens())
-

@@ -1,4 +1,4 @@
-from nlpype.objects import CoreObject, cache
+from nlpype.objects import CoreObject
 from nlpype.objects.has_tokens import HasTokens
 from nlpype.annotators import COREF
 
@@ -14,7 +14,10 @@ class CoreMention(CoreObject, HasTokens):
     def canonical(self):
         if COREF not in self._pipeline.annotators:
             raise AttributeError
-        return CoreMention(self._base.canonicalEntityMention().get(), self._pipeline)
+        return CoreMention(
+            self._base.canonicalEntityMention().get(),
+            self._pipeline
+        )
 
     def full(self):
         return ''.join(token.full() for token in self.tokens())
@@ -57,5 +60,3 @@ class CoreMention(CoreObject, HasTokens):
     @property
     def index(self):
         return self[0].index()
-
-

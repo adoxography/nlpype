@@ -14,4 +14,3 @@ class Presenter(metaclass=ABCMeta):
         text = self.convert(document)
         self._stream.write(text)
         self._stream.flush()
-
